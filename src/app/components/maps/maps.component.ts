@@ -12,7 +12,8 @@ declare const google: any;
 export class MapsComponent extends BaseComponent implements OnInit {
   constructor(inj: Injector) {
     super(inj);
-    this.selectedMode = "TRANSIT";
+    this.selectedMode = "DRIVING";
+    // this.getuserlocation();
   }
 
   ngOnInit() {
@@ -105,7 +106,7 @@ export class MapsComponent extends BaseComponent implements OnInit {
       document.getElementById("map"),
       this.mapOptions
     );
-    var directionsDisplay = new google.maps.DirectionsRenderer({
+    this.directionsDisplay = new google.maps.DirectionsRenderer({
       map: this.map
     });
     // var directionsDisplay = new google.maps.DirectionsRenderer(
@@ -119,11 +120,15 @@ export class MapsComponent extends BaseComponent implements OnInit {
     // });
   }
 
-  calculateAndDisplayRoute() {
+  calculateAndDisplayRoute(event?) {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer({
       map: this.map
     });
+    if(event){
+      console.log("selectedMode", this.selectedMode)
+      this.selectedMode = event;
+    }
     this.pickupLocation = {
       lat: parseFloat(this.lat),
       lng: parseFloat(this.lng)
@@ -159,8 +164,8 @@ export class MapsComponent extends BaseComponent implements OnInit {
       origin: this.pickupLocation, // Haight.
       // destination: { lat: 37.768, lng: -122.511 }, // Ocean Beach.
       // origin: { lat: 37.77, lng: -122.447 }, // Haight.
-      travelMode: "DRIVING"
-    };
+      travelMode: this.selectedMode
+      };
     directionsService.route(request, function(response, status) {
       if (status == "OK") {
         console.log(
@@ -189,5 +194,9 @@ export class MapsComponent extends BaseComponent implements OnInit {
         // self.popToast("error", `status`);
       }
     });
+  }
+  mapClicked(event) {
+    let lat = event.center.lat;
+    console.log("Mapclicked", lat);
   }
 }
