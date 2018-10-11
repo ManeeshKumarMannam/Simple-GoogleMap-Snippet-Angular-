@@ -1,14 +1,22 @@
-<div class="col-md-12">
-  Google maps are here
+<app-auth-header></app-auth-header>
+<div class="row">
+  <div class="col-md-8">
+    Google maps are here
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-primanry" [routerLink]="['/teacher']">Dashboard</button>
+  </div>
 </div>
 <!-- <div #googleMap style=”width:300%;height:300px”></div> -->
 <div id="floating-panel">
   <b>Mode of Travel: </b>
-  <select class="select" id="mode" (change)="calculateAndDisplayRoute('','',$event.target.value)">
+  <select class="select" id="mode" (change)="calculateAndDisplayRoute($event.target.value)">
     <option value="DRIVING">Driving</option>
     <option value="WALKING">Walking</option>
     <option value="BICYCLING">Bicycling</option>
     <option value="TRANSIT">Transit</option>
   </select>
 </div>
-<div id="map"></div>
+<div id="map" (click)="mapClicked(map)">
+  <!-- <div id="" -->
+</div>
