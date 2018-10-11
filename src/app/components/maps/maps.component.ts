@@ -13,7 +13,6 @@ export class MapsComponent extends BaseComponent implements OnInit {
   constructor(inj: Injector) {
     super(inj);
     this.selectedMode = "DRIVING";
-    // this.getuserlocation();
   }
 
   ngOnInit() {
@@ -52,8 +51,6 @@ export class MapsComponent extends BaseComponent implements OnInit {
     } else {
       this.popToast("error", "error in google Maps");
     }
-    // this.lat = 23.0225;
-    // this.lng = 72.5714;
     this.initMap();
   }
 
@@ -109,15 +106,7 @@ export class MapsComponent extends BaseComponent implements OnInit {
     this.directionsDisplay = new google.maps.DirectionsRenderer({
       map: this.map
     });
-    // var directionsDisplay = new google.maps.DirectionsRenderer(
-    // {
-    //     map: map
-    // });
-
     this.calculateAndDisplayRoute();
-    // document.getElementById("mode").addEventListener("change", function() {
-    //   this.calculateAndDisplayRoute(directionsService, directionsDisplay);
-    // });
   }
 
   calculateAndDisplayRoute(event?) {
@@ -125,8 +114,8 @@ export class MapsComponent extends BaseComponent implements OnInit {
     var directionsDisplay = new google.maps.DirectionsRenderer({
       map: this.map
     });
-    if(event){
-      console.log("selectedMode", this.selectedMode)
+    if (event) {
+      console.log("selectedMode", this.selectedMode);
       this.selectedMode = event;
     }
     this.pickupLocation = {
@@ -142,30 +131,14 @@ export class MapsComponent extends BaseComponent implements OnInit {
       this.pickupLocation,
       this.dropoffLocation
     );
-    var selectedMode = this.selectedMode;
     console.log("mode:", this.selectedMode);
-    //var selectedMode = mode;
-    // var findRoute = function(Response?, status?) {
-    //   if (status == "OK") {
-    //     directionsDisplay.setDirections(Response);
-    //   } else {
-    //     window.alert("Directions request failed due to " + status);
-    //   }
-    // };
 
     var self = this;
-    // var request = {
-    //   origin: { lat: 23.022505, lng: 72.571365 },
-    //   destination: { lat: 23.215635, lng: 72.63694 },
-    //   travelMode: google.maps.TravelMode.DRIVING
-    // };
     var request = {
       destination: this.dropoffLocation,
-      origin: this.pickupLocation, // Haight.
-      // destination: { lat: 37.768, lng: -122.511 }, // Ocean Beach.
-      // origin: { lat: 37.77, lng: -122.447 }, // Haight.
+      origin: this.pickupLocation,
       travelMode: this.selectedMode
-      };
+    };
     directionsService.route(request, function(response, status) {
       if (status == "OK") {
         console.log(
@@ -191,7 +164,6 @@ export class MapsComponent extends BaseComponent implements OnInit {
         );
       } else {
         window.alert("Directions request failed due to " + status);
-        // self.popToast("error", `status`);
       }
     });
   }
